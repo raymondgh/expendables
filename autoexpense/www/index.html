@@ -39,10 +39,10 @@
     </head>
     <body>
         
-        <div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
-            <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-home ui-btn-icon-notext ui-shadow" title=" Home " data-form="ui-icon" data-role="button" role="button"> Home </a>
+        <div style="margin: -10px; margin-top: 1.2em;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
             <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">AutoExpense</h1>
-            <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-calendar ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button"> Export </a>
+            <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
         </div>
         <div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
             <li role="heading" aria-level="1" onclick="viewBusinessOnly()"> Biz Only</li>
@@ -71,7 +71,7 @@
         
         var Trips = Parse.Object.extend("Trips");
         var queryObject = new Parse.Query("Trips");
-        var tripsObj;
+        window.tripsObj = null;
         // $('#autoexpense').append(addTrip(0,{
         //                                  start_time: 10,
         //                                  end_time: 20,
@@ -80,18 +80,28 @@
         //                                  average_mpg: 16}));
         queryObject.find({
                          success: function (results) {
-                         tripsObj = results;
+                         window.tripsObj = results;
                          for (var i = 0; i < results.length; i++) {
-                         $('#autoexpense').append(addTrip(i,results[i]));
-                         if ( results[i].get("business") == true ) {
-                         $('#b_' + i).find('label').click();
+                         	$('#autoexpense').append(addTrip(i,results[i]));
+                         	if ( results[i].get("business") == true ) {
+                         		$('#b_' + i).find('label').click();
+                         	}
                          }
-                         }
+                        
                          },
                          error: function (error) {
                          $('#autoexpense').append("Error: " + error.code + " " + error.message);
                          }});
                          
+                        $('#exportExpense').click(function() {
+//         						window.tripsObj = window.tripsObj.toJSON();
+//         						$.post( "expense.html", function( tripsObj  ) {					
+// 		        					alert( "Data Loaded: " + tripsObj );
+//         						}).done(function() {
+//     							alert( "second success" );
+    						window.location.replace("expense.html");
+//   							});
+        				});
                          
                          
                          function clickPersonal(elementOn, elementOff) {
@@ -149,6 +159,9 @@
                                                      });
                                    });
         }
+        
+        
+        
         
         function addTrip(ndx, trip) {
             

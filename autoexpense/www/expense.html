@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/Automatic.css" />
+        <link rel="stylesheet" type="text/css" href="css/Automatic.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
+        
+        <title>Expense Tracker</title>
+        <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/modernizr.custom.2.6.2.min.js"></script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/plugins.js"></script>
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/main.js"></script>
+        <script type="text/javascript" src="webtoolkit.scrollabletable.js"></script>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="webtoolkit.jscrollable.js"></script>
+    <script type="text/javascript">
+        jQuery(document).ready(function() {
+            jQuery('table').Scrollable(200, 800);
+        });
+     </script>
+ 
+    <style>
+        table {
+            text-align: left;
+            font-size: .2em;
+            background: white;
+        }
+ 
+        table thead tr,
+        table tfoot tr {
+            background: #08b1d5;
+        }
+ 
+        table tbody tr {
+            background: #f0f0f0;
+        }
+ 
+        td, th {
+        	padding: .2em;
+            border: 0 solid white;
+        }
+    </style>
+    </head>
+    <body>
+        <div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">Export</h1>
+        </div>
+        <div id="autoexpense">
+        <h4 >Travel Expenses</h4>
+        <h4 id="expenseTitle" style="float:right"></h4>
+        <span id="expenseDate" style="font-size: .1em"></span>
+    <table cellspacing="1">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Distance (miles)</th>
+            <th>Start</th>
+            <th>Stop</th>
+            <th>Cost</th>
+        </tr>
+    </thead>
+    <tbody id="expenseTable">
+    </tbody>
+</table>
+        </div>
+        
+        
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", 	"h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+            
+            var dateOptions = {
+    			year: "numeric", month: "short", day: "numeric"
+			};
+        
+        
+	        var queryObject = new Parse.Query("Trips");
+		    window.tripsObj = null;
+     
+     	   	queryObject.find({
+                         success: function (results) {
+                         window.tripsObj = results;
+                         for (var i = 0; i < results.length; i++) {
+                         	$('#expenseTable').append(addExpenseTable(results[i]));
+                         	
+                         }
+                         var totalCost = $("<tr><td colspan='5' style='text-align: right;'><strong>$"+ getTotalCost(results) +"</strong></td></tr>");
+                         $('#expenseTable').append(totalCost);	
+                         var startdate = new Date(results[0].get("start_time")).toLocaleDateString("en-us", dateOptions);
+						 var enddate = new Date(results[results.length-1].get("end_time")).toLocaleDateString("en-us", dateOptions);
+						 $('#expenseDate').text(enddate + " - " + startdate);
+
+                         },
+                         error: function (error) {
+                         	$('#autoexpense').append("Error: " + error.code + " " + error.message);
+            }});
+            
+            function addExpenseTable(trip) {
+            	var date = new Date(trip.get("start_time")).toLocaleDateString("en-us", dateOptions);
+            	return $("<tr><td>" + date + "</td><td>"+ (trip.get("distance_m")/1609).toFixed(2) +"</td><td>" + 
+            		trip.get("start_location") + "</td><td>" + 
+            		trip.get("end_location") + "</td><td>$" + 
+            		(trip.get("distance_m") * .000347967868).toFixed(2) +"</td></tr>");
+            }
+            
+            function getTotalCost(trips) {
+            	var total = 0;
+            	for (var i = 0; i < trips.length; i++) {
+            		total += (trips[i].get("distance_m") * .000347967868);
+            	}
+            	
+            	$("#expenseTitle").text("$" + total.toFixed(2));
+            	
+            	return total.toFixed(2);
+            }
+        
+            </script>
+    </body>
+</html>

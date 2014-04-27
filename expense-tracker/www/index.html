@@ -200,8 +200,13 @@ var tripSummaryDiv =  $("<div class='tripSummary'></div>");
 var endLocationDiv = $("<div class='endLocation'></div>");
 endLocationDiv.text(trip.get("end_location"));
 
+<<<<<<< HEAD
 var miDiv = $("<div class='distance'></div>");
 miDiv.text(Math.round(trip.get("distance_m")*0.000621371));
+=======
+var mpgDiv = $("<div class='mpg'></div>");
+mpgDiv.text(Math.round((trip.get("distance_m") / 1609.344 )));
+>>>>>>> FETCH_HEAD
 
 var startLocationDiv = $("<div class='startLocation'></div>");
 startLocationDiv.text(trip.get("start_location"));
