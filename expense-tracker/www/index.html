@@ -52,7 +52,16 @@
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
-            Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+            Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", 	"h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+            
+            var dateOptions = {
+    			year: "numeric", month: "short",
+			    day: "numeric", hour: "2-digit", minute: "2-digit"
+			};
+        
+        var hourOptions = {
+            hour: "2-digit", minute: "2-digit"
+        };
             
             function clickPersonal(elementOn, elementOff) {
                 $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child');
@@ -60,11 +69,11 @@
 
             }
         
-        function clickBusiness(elementOn, elementOff) {
-            $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
-            $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
+        	function clickBusiness(elementOn, elementOff) {
+            	$('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
+            	$('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
             
-        }
+        	}
             
             function hello() {
                 var TestObject = Parse.Object.extend("Trips");
@@ -96,47 +105,49 @@
             
             var toggleWrapperDiv = $("<div class='personal_business_toggle'></div>");
 
-var fieldsetDiv = $("<fieldset data-role='controlgroup' data-type='horizontal' class='ui-controlgroup ui-controlgroup-horizontal ui-corner-all' style='border: none;'></fieldset>");
+			var fieldsetDiv = $("<fieldset data-role='controlgroup' data-type='horizontal' class='ui-controlgroup ui-controlgroup-horizontal ui-corner-all' style='border: none;'></fieldset>");
 
-var toggleDiv = $("<div class='ui-controlgroup-controls' style='padding-left: .2em;'></div>");
+			var toggleDiv = $("<div class='ui-controlgroup-controls' style='padding-left: .2em;'></div>");
 
-var pDiv = $("<div id='p_" + ndx + "' class='ui-radio'></div>");
-
-
-var pLabel = $("<label for='radio-view-a-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child' onclick=\"clickPersonal('p_" + ndx +"','b_"+ ndx +"')\">P</label>");
-
-var pInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-a-a' value='list' checked='checked'></input>");
-
-var bDiv = $("<div id='b_" + ndx + "' class='ui-radio'></div>");
-
-var bLabel = $("<label for='radio-view-b-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child' onclick=\"clickPersonal('b_" + ndx +"','p_"+ ndx +"')\">B</label>");
-
-var bInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-b-a' value='grid'></input>");
+			var pDiv = $("<div id='p_" + ndx + "' class='ui-radio'></div>");
 
 
-var timesDiv =  $("<div class='times'></div>");
+			var pLabel = $("<label for='radio-view-a-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child' onclick=\"clickPersonal('p_" + ndx +"','b_"+ ndx +"')\">P</label>");
 
-var endTimeDiv = $("<div class='endTime'></div>");
-endTimeDiv.text(trip.end_time);
+			var pInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-a-a' value='list' checked='checked'></input>");
 
-var durationDiv = $("<div class='duration'></div>");
-durationDiv.text(trip.end_time - trip.start_time);
+			var bDiv = $("<div id='b_" + ndx + "' class='ui-radio'></div>");
+
+			var bLabel = $("<label for='radio-view-b-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child' onclick=\"clickBusiness('b_" + ndx +"','p_"+ ndx +"')\">B</label>");
+
+			var bInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-b-a' value='grid'></input>");
+
+
+			var timesDiv =  $("<div class='times'></div>");
+
+			var endTimeDiv = $("<div class='endTime'></div>");
+			
+			endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", dateOptions));
+
+			var durationDiv = $("<div class='duration'></div>");
+            var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime());
+durationDiv.text(diffTime.getHours() + ":" + diffTime.getMinutes());
 
 var startTimeDiv = $("<div class='startTime'></div>");
-startTimeDiv.text(trip.start_time);
+startTimeDiv.text(new Date(trip.get("start_time")).toLocaleTimeString("en-us", dateOptions));
 
 var tripLineDiv = $("<div class='tripLine'></div><div></div><div></div>");
 
 var tripSummaryDiv =  $("<div class='tripSummary'></div>");
 
 var endLocationDiv = $("<div class='endLocation'></div>");
-endLocationDiv.text(trip.end_location);
+endLocationDiv.text(trip.get("end_location"));
 
 var mpgDiv = $("<div class='mpg'></div>");
-mpgDiv.text(trip.average_mpg);
+mpgDiv.text(Math.round(trip.get("average_mpg")));
 
 var startLocationDiv = $("<div class='startLocation'></div>");
-startLocationDiv.text(trip.start_location);
+startLocationDiv.text(trip.get("start_location"));
 
 
 tripSummaryDiv.append(endLocationDiv);
@@ -168,24 +179,27 @@ return trips;
         }
         
         var Trips = Parse.Object.extend("Trips");
-        var queryObject = new Parse.Query(Trips);
+        var queryObject = new Parse.Query("Trips");
 
-$('#autoexpense').append(addTrip(0,{
-                                 start_time: 10,
-                                 end_time: 20,
-                                 start_location: "LA",
-                                 end_location: "SF",
-                                 average_mpg: 16}));
-//        queryObject.find({
-//                         success: function (results) {
-//                            for (var i = 0; i < results.length; i++) {
-//
-//                            }
-//                         },
-//                         error: function (error) {
-//                            alert("Error: " + error.code + " " + error.message);
-//                         }
-//
+// $('#autoexpense').append(addTrip(0,{
+//                                  start_time: 10,
+//                                  end_time: 20,
+//                                  start_location: "LA",
+//                                  end_location: "SF",
+//                                  average_mpg: 16}));
+       queryObject.find({
+                        success: function (results) {
+                           for (var i = 0; i < results.length; i++) {
+								$('#autoexpense').append(addTrip(i,results[i]));
+                                if ( results[i].get("business") == true ) {
+                                $('#b_' + i).find('label').click();
+                                }
+                           }
+                        },
+                        error: function (error) {
+                           		$('#autoexpense').append("Error: " + error.code + " " + error.message);
+                        }});
+
 
 
 
