@@ -39,15 +39,15 @@
     </head>
     <body>
         
-        <div style="margin: -10px; margin-top: 1.2em;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
-            <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
+        <div style="margin: -10px; margin-top: 1.5em;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <a style="margin-top: -.25em;" class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
             <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">AutoExpense</h1>
-            <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
+            <a style="margin-top: -.25em;" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
         </div>
-        <div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
-            <li role="heading" aria-level="1" onclick="viewBusinessOnly()"> Biz Only</li>
-            <li role="heading" aria-level="1" onclick="viewPersonalOnly()"> Personal Only</li>
-            <li role="heading" aria-level="1" onclick="viewPersonalAndBusiness()"> View All</li>
+        <div style="margin: -10px; text-align: center" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <button onclick="viewPersonalAndBusiness()" style="width: 10em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">All</button>
+            <button onclick="viewBusinessOnly()" style="width: 10em"  data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-shop">Business</button>
+            <button onclick="viewPersonalOnly()" style="width: 10em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-user">Personal</button>
         </div>
         <div id="autoexpense">
         </div>
