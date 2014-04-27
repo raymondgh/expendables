@@ -23,7 +23,6 @@
         <meta name="format-detection" content="telephone=no" />
         <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/Automatic.css" />
         <link rel="stylesheet" type="text/css" href="css/Automatic.min.css" />
          
@@ -39,22 +38,82 @@
         <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/main.js"></script>
     </head>
     <body>
-        <div class="preview ui-shadow swatch">
-            <div class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
-                <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-home ui-btn-icon-notext ui-shadow" title=" Home " data-form="ui-icon" data-role="button" role="button"> Home </a>
-                <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">A</h1>
-                <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-grid ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button"> Navigation </a>
+
+<div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+    <a class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-home ui-btn-icon-notext ui-shadow" title=" Home " data-form="ui-icon" data-role="button" role="button"> Home </a>
+    <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">AutoExpense</h1>
+    <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-calendar ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button"> Export </a>
+</div>
+
+        <div id="trips" class="trip tile">
+            <div data-role="fieldcontain" class="ui-field-contain">
+                <div style="float: left;
+                    width: 8em;
+                    margin-right: -5em;
+                    margin-top: 2.4em;">
+                <fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" style="border: none;"><div class="ui-controlgroup-controls ">
+                    <div class="ui-radio"><label for="radio-view-a-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child">P</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-a-a" value="list" checked="checked"></div>
+                    
+                    <div class="ui-radio"><label for="radio-view-b-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child">B</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-b-a" value="grid"></div>
+                    
+                </div>
+                </fieldset>
+                </div>
+                <div class="times">
+                    <div class="endTime">Apr 26, 2014<br> 12:00 AM</div>
+                    <div class="duration">11 min</div>
+                    <div class="startTime">Apr 25, 2014<br> 11:49 PM</div>
+                    <div class="tripLine">
+                        <div></div>
+                        <div></div>
+                    </div>
+                </div>
+                <div class="tripSummary">
+                    <div class="endLocation">Guerrero St, SF, CA</div>
+                    <div class="mpg">16.0</div>
+                    <div class="startLocation">Treat Ave, SF, CA</div>
+                </div>
             </div>
+            
+            <!--div class="map leaflet-container leaflet-retina leaflet-fade-anim" id="map535b59dee4b047b644f2700e" tabindex="0" style="position: relative;">
+                <div class="leaflet-map-pane" style="-webkit-transform: translate3d(0px, 0px, 0px);">
+                    <div class="leaflet-tile-pane">
+                        <div class="leaflet-layer">
+                            <div class="leaflet-tile-container"></div>
+                            <div class="leaflet-tile-container leaflet-zoom-animated">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2620/6333.png" style="height: 256px; width: 256px; left: 79px; top: -164px;">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2620/6334.png" style="height: 256px; width: 256px; left: 79px; top: 92px;">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2619/6333.png" style="height: 256px; width: 256px; left: -177px; top: -164px;">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2621/6333.png" style="height: 256px; width: 256px; left: 335px; top: -164px;">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2619/6334.png" style="height: 256px; width: 256px; left: -177px; top: 92px;">
+                                <img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2621/6334.png" style="height: 256px; width: 256px; left: 335px; top: 92px;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="leaflet-objects-pane">
+                        <div class="leaflet-shadow-pane">
+                            <img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; -webkit-transform: translate3d(297px, 143px, 0px);">
+                            <img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; -webkit-transform: translate3d(174px, 48px, 0px);">
+                        </div>
+                        <div class="leaflet-overlay-pane">
+                            <svg class="leaflet-zoom-animated" width="661" height="269" viewBox="-106 -43 661 269" style="-webkit-transform: translate3d(-106px, -43px, 0px);">
+                                <g>
+                                <path stroke-linejoin="round" stroke-linecap="round" stroke="#08b1d5" stroke-opacity="0.9" stroke-width="5" fill="none" class="leaflet-clickable" d="M299 142L296 103L196 111L198 63L150 67L152 91L166 90L163 43L175 42L175 48"></path>
+                                </g>
+                            </svg>
+                        </div>
+                        <div class="leaflet-marker-pane">
+                            <img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated" title="Start Location" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; -webkit-transform: translate3d(297px, 143px, 0px); z-index: 143;">
+                            <img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; -webkit-transform: translate3d(174px, 48px, 0px); z-index: 48;">
+                        </div>
+                        <div class="leaflet-popup-pane"></div>
+                    </div>
+                </div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in">+</a><a class="leaflet-control-zoom-out" href="#" title="Zoom out">-</a></div></div><div class="leaflet-top leaflet-right"><div class="leaflet-control-grid map-tooltip leaflet-control" style="display: none;"><a class="close" href="#" title="close">close</a><div class="map-tooltip-content"></div></div></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="map-legends wax-legends leaflet-control" style="display: none;"></div><div class="mapbox-control-info mapbox-small mapbox-control-info-right leaflet-control" style="display: block;"><div class="map-info-container"><a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox © OpenStreetMap</a> <a class="mapbox-improve-map" href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></div><a class="mapbox-info-toggle mapbox-icon mapbox-icon-info" href="#"></a></div></div>
+                </div>
+            </div-->
         </div>
-        <!-- div class="trip tile"><div class="times"><div class="endTime">Apr 26, 2014<br> 12:00 AM</div><div class="duration">11 min</div><div class="startTime">Apr 25, 2014<br> 11:49 PM</div><div class="tripLine"><div></div><div></div></div></div><div class="tripSummary"><div class="endLocation">Guerrero St, SF, CA</div><div class="tripSummaryBox"><div class="distance">1.6</div><div class="mpg">16.0</div><div class="fuelCost">0.42</div><div class="hardBrakes noHardBrakes"><i class="glyphicon glyphicon-ok"></i></div><div class="hardAccels noHardAccels"><i class="glyphicon glyphicon-ok"></i></div><div class="durationOver70 noSpeeding"><i class="glyphicon glyphicon-ok"></i></div></div><div class="startLocation">Treat Ave, SF, CA</div></div><div class="map leaflet-container leaflet-retina leaflet-fade-anim" id="map535b59dee4b047b644f2700e" tabindex="0" style="position: relative;"><div class="leaflet-map-pane" style="-webkit-transform: translate3d(0px, 0px, 0px);"><div class="leaflet-tile-pane"><div class="leaflet-layer"><div class="leaflet-tile-container"></div><div class="leaflet-tile-container leaflet-zoom-animated"><img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2620/6333.png" style="height: 256px; width: 256px; left: 79px; top: -164px;"><img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2620/6334.png" style="height: 256px; width: 256px; left: 79px; top: 92px;"><img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2619/6333.png" style="height: 256px; width: 256px; left: -177px; top: -164px;"><img class="leaflet-tile leaflet-tile-loaded" src="https://a.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2621/6333.png" style="height: 256px; width: 256px; left: 335px; top: -164px;"><img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2619/6334.png" style="height: 256px; width: 256px; left: -177px; top: 92px;"><img class="leaflet-tile leaflet-tile-loaded" src="https://b.tiles.mapbox.com/v3/examples.map-9ijuk24y/14/2621/6334.png" style="height: 256px; width: 256px; left: 335px; top: 92px;"></div></div></div><div class="leaflet-objects-pane"><div class="leaflet-shadow-pane"><img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; -webkit-transform: translate3d(297px, 143px, 0px);"><img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-shadow.png" class="leaflet-marker-shadow leaflet-zoom-animated" style="margin-left: -12px; margin-top: -41px; width: 41px; height: 41px; -webkit-transform: translate3d(174px, 48px, 0px);"></div><div class="leaflet-overlay-pane"><svg class="leaflet-zoom-animated" width="661" height="269" viewBox="-106 -43 661 269" style="-webkit-transform: translate3d(-106px, -43px, 0px);"><g><path stroke-linejoin="round" stroke-linecap="round" stroke="#08b1d5" stroke-opacity="0.9" stroke-width="5" fill="none" class="leaflet-clickable" d="M299 142L296 103L196 111L198 63L150 67L152 91L166 90L163 43L175 42L175 48"></path></g></svg></div><div class="leaflet-marker-pane"><img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated" title="Start Location" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; -webkit-transform: translate3d(297px, 143px, 0px); z-index: 143;"><img src="//api.tiles.mapbox.com/mapbox.js/v1.6.1/images/marker-icon-2x.png" class="leaflet-marker-icon leaflet-zoom-animated leaflet-clickable" tabindex="0" style="margin-left: -12px; margin-top: -41px; width: 25px; height: 41px; -webkit-transform: translate3d(174px, 48px, 0px); z-index: 48;"></div><div class="leaflet-popup-pane"></div></div></div><div class="leaflet-control-container"><div class="leaflet-top leaflet-left"><div class="leaflet-control-zoom leaflet-bar leaflet-control"><a class="leaflet-control-zoom-in" href="#" title="Zoom in">+</a><a class="leaflet-control-zoom-out" href="#" title="Zoom out">-</a></div></div><div class="leaflet-top leaflet-right"><div class="leaflet-control-grid map-tooltip leaflet-control" style="display: none;"><a class="close" href="#" title="close">close</a><div class="map-tooltip-content"></div></div></div><div class="leaflet-bottom leaflet-left"></div><div class="leaflet-bottom leaflet-right"><div class="map-legends wax-legends leaflet-control" style="display: none;"></div><div class="mapbox-control-info mapbox-small mapbox-control-info-right leaflet-control" style="display: block;"><div class="map-info-container"><a href="https://www.mapbox.com/about/maps/" target="_blank">© Mapbox © OpenStreetMap</a> <a class="mapbox-improve-map" href="https://www.mapbox.com/map-feedback/" target="_blank">Improve this map</a></div><a class="mapbox-info-toggle mapbox-icon mapbox-icon-info" href="#"></a></div></div></div></div></div -->
         
         
-        <div>
-            <h1>PhoneGap</h1>
-            <div>
-                <p id="hello" class="event listening" onclick="hello()">Connecting to Device</p>
-            </div>
-        </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
@@ -79,6 +138,19 @@
                                     });
                                 });
             }
+        
+        var Trips = Parse.Object.extend("Trips");
+        var queryObject = new Parse.Query(Trips);
+        
+//        queryObject.find({
+//                         success: function (results) {
+//                            for (var i = 0; i < results.length; i++) {
+//                         
+//                            }
+//                         },
+//                         error: function (error) {
+//                            alert("Error: " + error.code + " " + error.message);
+//                         }
         </script>
     </body>
 </html>
