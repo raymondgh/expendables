@@ -201,7 +201,7 @@ var endLocationDiv = $("<div class='endLocation'></div>");
 endLocationDiv.text(trip.get("end_location"));
 
 var mpgDiv = $("<div class='mpg'></div>");
-mpgDiv.text(Math.round(trip.get("average_mpg")));
+mpgDiv.text(Math.round((trip.get("distance_m") / 1609.344 )));
 
 var startLocationDiv = $("<div class='startLocation'></div>");
 startLocationDiv.text(trip.get("start_location"));
