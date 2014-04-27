@@ -51,12 +51,15 @@
                     width: 8em;
                     margin-right: -5em;
                     margin-top: 2.4em;">
-                <fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" style="border: none;"><div class="ui-controlgroup-controls ">
-                    <div class="ui-radio"><label for="radio-view-a-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child">P</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-a-a" value="list" checked="checked"></div>
+                <fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" style="border: none;">
+                    <div class="ui-controlgroup-controls" style="padding-left: .2em;">
+                    <div id="p_1" class="ui-radio"><label for="radio-view-a-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child" onclick="clickPersonal('p_1','b_1')">P</label>
+                        <input data-theme="a" type="radio" name="radio-view-a" id="radio-view-a-a" value="list" checked="checked"></div>
                     
-                    <div class="ui-radio"><label for="radio-view-b-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child">B</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-b-a" value="grid"></div>
+                    <div id="b_1" class="ui-radio"><label for="radio-view-b-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child" onclick="clickBusiness('b_1','p_1')">B</label>
+                        <input data-theme="a" type="radio" name="radio-view-a" id="radio-view-b-a" value="grid"></div>
                     
-                </div>
+                    </div>
                 </fieldset>
                 </div>
                 <div class="times">
@@ -118,6 +121,27 @@
         <script type="text/javascript" src="js/index.js"></script>
         <script type="text/javascript">
             Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+            
+            function clickPersonal(elementOn, elementOff) {
+//                document.getElementById(elementOn).className = "";
+//                $('#' + elementOn).find('label').className = "";
+                $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child');
+
+//                document.getElementById(elementOff).className = "";
+//$('#' + elementOff).find('label').className = "";
+$('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child');
+
+            }
+        
+        function clickBusiness(elementOn, elementOff) {
+            $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
+            
+            //                document.getElementById(elementOff).className = "";
+            //$('#' + elementOff).find('label').className = "";
+            $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
+            
+        }
+            
             function hello() {
                 var TestObject = Parse.Object.extend("Trips");
                 var testObject = new TestObject();
@@ -145,12 +169,44 @@
 //        queryObject.find({
 //                         success: function (results) {
 //                            for (var i = 0; i < results.length; i++) {
-//                         
+//
 //                            }
 //                         },
 //                         error: function (error) {
 //                            alert("Error: " + error.code + " " + error.message);
 //                         }
+//
+//<div id="trips" class="trip tile">
+//<div data-role="fieldcontain" class="ui-field-contain">
+//<div style="float: left;
+//width: 8em;
+//margin-right: -5em;
+//margin-top: 2.4em;">
+//<fieldset data-role="controlgroup" data-type="horizontal" class="ui-controlgroup ui-controlgroup-horizontal ui-corner-all" style="border: none;">
+//<div class="ui-controlgroup-controls ">
+//<div class="ui-radio"><label for="radio-view-a-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child">P</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-a-a" value="list" checked="checked"></div>
+//
+//<div class="ui-radio"><label for="radio-view-b-a" data-form="ui-btn-up-a" class="ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child">B</label><input data-theme="a" type="radio" name="radio-view-a" id="radio-view-b-a" value="grid"></div>
+//
+//</div>
+//</fieldset>
+//</div>
+//<div class="times">
+//<div class="endTime">Apr 26, 2014<br> 12:00 AM</div>
+//<div class="duration">11 min</div>
+//<div class="startTime">Apr 25, 2014<br> 11:49 PM</div>
+//<div class="tripLine">
+//<div></div>
+//<div></div>
+//</div>
+//</div>
+//<div class="tripSummary">
+//<div class="endLocation">Guerrero St, SF, CA</div>
+//<div class="mpg">16.0</div>
+//<div class="startLocation">Treat Ave, SF, CA</div>
+//</div>
+//</div>
+//</div>
         </script>
     </body>
 </html>
