@@ -22,8 +22,8 @@ select,
 textarea,
 button,
 .ui-btn {
-font-size: .1em;
-line-height: 1em;
+	font-size: .1em;
+	line-height: 1em;
 	   font-family: avenir /*{global-font-family}*/;
 }
 legend,
@@ -4041,13 +4041,13 @@ margin-left: -.7em;
 
 .trip.tile .tripSummary {
 float: left;
-width: 6em;
+width: 12em;
 padding: .7em;
 }
 
 .trip.tile .startLocation,
 .trip.tile .endLocation {
-font-size: .2em;
+font-size: 1em;
 padding-left: .5em;
 
 }
