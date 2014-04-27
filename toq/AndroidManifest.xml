@@ -3,9 +3,9 @@
   Copyright (c) 2013 Qualcomm Connected Experiences, Inc, All rights reserved
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.qualcomm.toq.smartwatch.api.v1.deckofcards.demo"
-    android:versionCode="140"
-    android:versionName="1.4.0" >
+    package="com.parseapp.expensetracker.toq"
+    android:versionCode="100"
+    android:versionName="1.0.0" >
 
     <uses-sdk
         android:minSdkVersion="15"

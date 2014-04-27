@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2014 Qualcomm Connected Experiences, Inc, All rights reserved
  ******************************************************************************/
-package com.qualcomm.toq.smartwatch.api.v1.deckofcards.demo;
+package com.parseapp.expensetracker.toq;
 
 import java.io.InputStream;
 
@@ -622,32 +622,32 @@ public class ToqApiDemo extends Activity{
         // Deck of cards
         ListCard listCard= deckOfCards.getListCard();
         
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
-
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
-
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);
+//        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);
+//        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);
+//        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
 
         // Notification
         ((EditText)findViewById(R.id.notification_title_text)).setText("Title");
@@ -794,59 +794,59 @@ public class ToqApiDemo extends Activity{
     
     // Parse the UI to update the deck of cards contents
     private void updateDeckOfCardsFromUI(){
-
-        ListCard listCard= deckOfCards.getListCard();
-
-        // Card 1
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc1_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc1_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc1_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc1_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc1_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc1_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc1_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc1_menu_options_text)).getText().toString()));
-        }     
-                
-        // Card 2
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc2_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc2_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc2_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc2_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc2_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc2_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc2_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc2_menu_options_text)).getText().toString()));
-        }
-        
-        // Card 3
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc3_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc3_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc3_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
-        } 
+//
+//        ListCard listCard= deckOfCards.getListCard();
+//
+//        // Card 1
+//        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc1_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc1_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc1_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc1_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc1_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc1_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc1_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc1_menu_options_text)).getText().toString()));
+//        }
+//
+//        // Card 2
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc2_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc2_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc2_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc2_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc2_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc2_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc2_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc2_menu_options_text)).getText().toString()));
+//        }
+//
+//        // Card 3
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc3_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc3_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc3_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
+//        }
 
     }
     

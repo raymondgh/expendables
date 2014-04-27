@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2014 Qualcomm Connected Experiences, Inc, All rights reserved
  ******************************************************************************/
-package com.qualcomm.toq.smartwatch.api.v1.deckofcards.demo;
+package com.parseapp.expensetracker.toq;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
