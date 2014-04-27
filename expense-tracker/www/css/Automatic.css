@@ -4008,6 +4008,12 @@ position: relative;
   font-weight: bold;
 }
 
+.trip.tile .duration::after {
+  content: ' min.';
+  font-size: 14px;
+  font-weight: normal;
+}
+
 .trip.tile .startTime {
   margin-top: 1em;
 }
@@ -4063,14 +4069,15 @@ padding-left: .5em;
 
 .trip.tile .distance {
   width: 33%;
-  float: left;
-  font-size: 30px;
-  font-weight: bold;
-  margin-bottom: 14px;
+font-size: 1em;
+font-weight: bold;
+padding-top: .3em;
+text-align: center;
+padding-bottom: .3em;
 }
 
 .trip.tile .distance::after {
-  content: ' MILES';
+  content: ' mi';
   font-size: 14px;
   font-weight: normal;
 }

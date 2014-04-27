@@ -187,8 +187,8 @@
 			endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", dateOptions));
 
 			var durationDiv = $("<div class='duration'></div>");
-            var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime());
-durationDiv.text(diffTime.getHours() + ":" + diffTime.getMinutes());
+            var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
+            durationDiv.text(Math.round(diffTime));
 
 var startTimeDiv = $("<div class='startTime'></div>");
 startTimeDiv.text(new Date(trip.get("start_time")).toLocaleTimeString("en-us", dateOptions));
@@ -200,15 +200,15 @@ var tripSummaryDiv =  $("<div class='tripSummary'></div>");
 var endLocationDiv = $("<div class='endLocation'></div>");
 endLocationDiv.text(trip.get("end_location"));
 
-var mpgDiv = $("<div class='mpg'></div>");
-mpgDiv.text(Math.round(trip.get("average_mpg")));
+var miDiv = $("<div class='distance'></div>");
+miDiv.text(Math.round(trip.get("distance_m")*0.000621371));
 
 var startLocationDiv = $("<div class='startLocation'></div>");
 startLocationDiv.text(trip.get("start_location"));
 
 
 tripSummaryDiv.append(endLocationDiv);
-tripSummaryDiv.append(mpgDiv);
+tripSummaryDiv.append(miDiv);
 tripSummaryDiv.append(startLocationDiv);
 
 timesDiv.append(endTimeDiv);
