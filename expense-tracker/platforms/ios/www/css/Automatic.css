@@ -4293,4 +4293,11 @@ padding-bottom: .3em;
   right: 0;
 }
 
+.personal_business_toggle {
+float: left;
+width: 8em;
+margin-right: -5em;
+margin-top: 2.4em;
+}
+
 			
