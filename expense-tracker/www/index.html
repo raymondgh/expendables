@@ -62,17 +62,47 @@
         var hourOptions = {
             hour: "2-digit", minute: "2-digit"
         };
+        
+        
+        var Trips = Parse.Object.extend("Trips");
+        var queryObject = new Parse.Query("Trips");
+        var tripsObj;
+        // $('#autoexpense').append(addTrip(0,{
+        //                                  start_time: 10,
+        //                                  end_time: 20,
+        //                                  start_location: "LA",
+        //                                  end_location: "SF",
+        //                                  average_mpg: 16}));
+        queryObject.find({
+                         success: function (results) {
+                         tripsObj = results;
+                         for (var i = 0; i < results.length; i++) {
+                         $('#autoexpense').append(addTrip(i,results[i]));
+                         if ( results[i].get("business") == true ) {
+                         $('#b_' + i).find('label').click();
+                         }
+                         }
+                         },
+                         error: function (error) {
+                         $('#autoexpense').append("Error: " + error.code + " " + error.message);
+                         }});
+                         
+
             
             function clickPersonal(elementOn, elementOff) {
                 $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child');
                 $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child');
-
+                var ndx = elementOn.split("_")[1];
+                tripsObj[ndx].set("business", false);
+                tripsObj[ndx].save();
             }
         
         	function clickBusiness(elementOn, elementOff) {
             	$('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
             	$('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
-            
+                var ndx = elementOn.split("_")[1];
+                tripsObj[ndx].set("business", true);
+                tripsObj[ndx].save();
         	}
             
             function hello() {
@@ -178,29 +208,6 @@ return trips;
 
         }
         
-        var Trips = Parse.Object.extend("Trips");
-        var queryObject = new Parse.Query("Trips");
-
-// $('#autoexpense').append(addTrip(0,{
-//                                  start_time: 10,
-//                                  end_time: 20,
-//                                  start_location: "LA",
-//                                  end_location: "SF",
-//                                  average_mpg: 16}));
-       queryObject.find({
-                        success: function (results) {
-                           for (var i = 0; i < results.length; i++) {
-								$('#autoexpense').append(addTrip(i,results[i]));
-                                if ( results[i].get("business") == true ) {
-                                $('#b_' + i).find('label').click();
-                                }
-                           }
-                        },
-                        error: function (error) {
-                           		$('#autoexpense').append("Error: " + error.code + " " + error.message);
-                        }});
-
-
 
 
         </script>
