@@ -44,6 +44,11 @@
     <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">AutoExpense</h1>
     <a class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-calendar ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button"> Export </a>
 </div>
+<div style="margin: -10px;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+    <li role="heading" aria-level="1" onclick="viewBusinessOnly()"> Biz Only</li>
+    <li role="heading" aria-level="1" onclick="viewPersonalOnly()"> Personal Only</li>
+    <li role="heading" aria-level="1" onclick="viewPersonalAndBusiness()"> View All</li>
+</div>
 <div id="autoexpense">
 </div>
 
@@ -93,6 +98,8 @@
                 $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child');
                 $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child');
                 var ndx = elementOn.split("_")[1];
+                $('#trips_' + ndx).attr('class', 'trip tile personal');
+
                 tripsObj[ndx].set("business", false);
                 tripsObj[ndx].save();
             }
@@ -101,9 +108,26 @@
             	$('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
             	$('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
                 var ndx = elementOn.split("_")[1];
+                $('#trips_' + ndx).attr('class', 'trip tile business');
+
                 tripsObj[ndx].set("business", true);
                 tripsObj[ndx].save();
         	}
+        
+        function viewBusinessOnly(){
+            $('.business').show();
+            $('.personal').hide();
+        }
+        
+        function viewPersonalOnly(){
+            $('.business').hide();
+            $('.personal').show();
+        }
+        
+        function viewPersonalAndBusiness() {
+            $('.business').show();
+            $('.personal').show();
+        }
             
             function hello() {
                 var TestObject = Parse.Object.extend("Trips");
@@ -128,8 +152,8 @@
         
         function addTrip(ndx, trip) {
  
-            
-            var trips = $("<div id='trips_" + ndx + "' class='trip tile'></div>");
+            var biz =trip.get("business") ? "business" : "personal";
+            var trips = $("<div id='trips_" + ndx + "' class='trip tile "+biz+"'></div>");
             
             var fieldcontain = $("<div data-role='fieldcontain' class='ui-field-contain'></div>");
             
