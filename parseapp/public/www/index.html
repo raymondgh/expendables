@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<!--
+ Licensed to the Apache Software Foundation (ASF) under one
+ or more contributor license agreements.  See the NOTICE file
+ distributed with this work for additional information
+ regarding copyright ownership.  The ASF licenses this file
+ to you under the Apache License, Version 2.0 (the
+ "License"); you may not use this file except in compliance
+ with the License.  You may obtain a copy of the License at
+ 
+ http://www.apache.org/licenses/LICENSE-2.0
+ 
+ Unless required by applicable law or agreed to in writing,
+ software distributed under the License is distributed on an
+ "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ KIND, either express or implied.  See the License for the
+ specific language governing permissions and limitations
+ under the License.
+ -->
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/Automatic.css" />
+        <link rel="stylesheet" type="text/css" href="css/Automatic.min.css" />
+        
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.icons.min.css" />
+        
+        <title>Expense Tracker</title>
+        <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/modernizr.custom.2.6.2.min.js"></script>
+        
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+        
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/plugins.js"></script>
+        <script src="http://api.jquery.com/jquery-wp-content/themes/jquery/js/main.js"></script>
+    </head>
+    <body>
+        <div style="margin-left: -.5em; margin-right: -.5em;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <a style="" class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
+            <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">
+            	<img style="height: 1.5em; margin: -.5em;" src="img/AutoExpense-Logo.jpg"/></h1>
+            <a style="margin-left: -.5em; margin-right: -.5em;" href="expense.html" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
+        </div>
+        <div style="margin-left: -.5em; margin-right: -.5em; text-align: center" class="fixedFilter ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+            <button onclick="viewPersonalAndBusiness()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">All</button>
+            <button onclick="viewPersonalOnly()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-user">Personal</button>
+            <button onclick="viewBusinessOnly()" style="width: 8em"  data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-shop">Business</button>
+        </div>
+        <div id="autoexpense">
+        </div>
+        
+        
+        
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript">
+            Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", 	"h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+            
+            var dateOptions = {
+    			year: "numeric", month: "short",
+			    day: "numeric", hour: "2-digit", minute: "2-digit"
+			};
+        
+        var hourOptions = {
+            hour: "2-digit", minute: "2-digit"
+        };
+        
+        
+        var Trips = Parse.Object.extend("Trips");
+        var queryObject = new Parse.Query("Trips");
+        var tripsObj;
+        // $('#autoexpense').append(addTrip(0,{
+        //                                  start_time: 10,
+        //                                  end_time: 20,
+        //                                  start_location: "LA",
+        //                                  end_location: "SF",
+        //                                  average_mpg: 16}));
+        queryObject.find({
+                         success: function (results) {
+                         tripsObj = results;
+                         for (var i = 0; i < results.length; i++) {
+                         $('#autoexpense').append(addTrip(i,results[i]));
+                         if ( results[i].get("business") == true ) {
+                         $('#b_' + i).find('label').click();
+                         }
+                         }
+                         },
+                         error: function (error) {
+                         $('#autoexpense').append("Error: " + error.code + " " + error.message);
+                         }});
+                         
+                         window.addEventListener("load",function() {
+                                                 setTimeout(function(){
+                                                            window.scrollTo(0, 1);
+                                                            }, 0);
+                                                 });
+                                                 
+$(window).scroll(function(e){ 
+  $el = $('.fixedFilter'); 
+  if ($(this).scrollTop() > 100 && $el.css('position') != 'fixed'){
+    $('.fixedFilter').css({'position': 'fixed', 'top': '0px', 'width': '100%'});
+  } else if ( $(this).scrollTop() <= 100 ){
+                 $('.fixedFilter').css({'margin-left': '-.5em', 'margin-right': '-.5em', 'text-align': 'center', 'top': 'px', 'position' : 'relative', 'width': '%'})
+  }
+});
+                         
+                         
+                         function clickPersonal(elementOn, elementOff) {
+                             $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child');
+                             $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child');
+                             var ndx = elementOn.split("_")[1];
+                             $('#trips_' + ndx).attr('class', 'trip tile personal');
+                             
+                             tripsObj[ndx].set("business", false);
+                             tripsObj[ndx].save();
+                         }
+        
+        function clickBusiness(elementOn, elementOff) {
+            $('#' + elementOn).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-last-child');
+            $('#' + elementOff).find('label').attr('class','ui-btn ui-corner-all ui-btn-a ui-radio-off ui-first-child');
+            var ndx = elementOn.split("_")[1];
+            $('#trips_' + ndx).attr('class', 'trip tile business');
+            
+            tripsObj[ndx].set("business", true);
+            tripsObj[ndx].save();
+        }
+        
+        function viewBusinessOnly(){
+            $('.business').show();
+            $('.personal').hide();
+        }
+        
+        function viewPersonalOnly(){
+            $('.business').hide();
+            $('.personal').show();
+        }
+        
+        function viewPersonalAndBusiness() {
+            $('.business').show();
+            $('.personal').show();
+        }
+        
+        function hello() {
+            var TestObject = Parse.Object.extend("Trips");
+            var testObject = new TestObject();
+            testObject.save(
+                            {
+                            "start_time": 1398038541600,
+                            "end_time": 1398041460104,
+                            "distance_m": 46821.44444444467,
+                            "fuel_cost_usd": 3.8719706355771475,
+                            "average_mpg": 27.771531183330147,
+                            "start_location": "Rocklin Rd, Rocklin, CA",
+                            "end_location": "L St, Sacramento, CA"
+                            }
+                            
+                            ).then(function(object) {
+                                   $("#hello").click(function() {
+                                                     $("#hello").text("Boo");
+                                                     });
+                                   });
+        }
+        
+        function addTrip(ndx, trip) {
+            
+            var biz =trip.get("business") ? "business" : "personal";
+            var trips = $("<div id='trips_" + ndx + "' class='trip tile "+biz+"'></div>");
+            
+            var fieldcontain = $("<div data-role='fieldcontain' class='ui-field-contain'></div>");
+            
+            var toggleWrapperDiv = $("<div class='personal_business_toggle'></div>");
+            
+			var fieldsetDiv = $("<fieldset data-role='controlgroup' data-type='horizontal' class='ui-controlgroup ui-controlgroup-horizontal ui-corner-all' style='border: none;'></fieldset>");
+            
+			var toggleDiv = $("<div class='ui-controlgroup-controls' style='padding-left: .2em;'></div>");
+            
+			var pDiv = $("<div id='p_" + ndx + "' class='ui-radio'></div>");
+            
+            
+			var pLabel = $("<label for='radio-view-a-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-on ui-btn-active ui-first-child' onclick=\"clickPersonal('p_" + ndx +"','b_"+ ndx +"')\">P</label>");
+            
+			var pInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-a-a' value='list' checked='checked'></input>");
+            
+			var bDiv = $("<div id='b_" + ndx + "' class='ui-radio'></div>");
+            
+			var bLabel = $("<label for='radio-view-b-a' data-form='ui-btn-up-a' class='ui-btn ui-corner-all ui-btn-a ui-radio-off ui-last-child' onclick=\"clickBusiness('b_" + ndx +"','p_"+ ndx +"')\">B</label>");
+            
+			var bInput = $("<input data-theme='a' type='radio' name='radio-view-a' id='radio-view-b-a' value='grid'></input>");
+            
+            
+			var timesDiv =  $("<div class='times'></div>");
+            
+			var endTimeDiv = $("<div class='endTime'></div>");
+			
+			endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", dateOptions));
+            
+			var durationDiv = $("<div class='duration'></div>");
+            //  var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime());
+//              durationDiv.text(diffTime.getHours() + ":" + diffTime.getMinutes());
+            
+            var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
+            durationDiv.text(Math.round(diffTime));
+ 
+            var startTimeDiv = $("<div class='startTime'></div>");
+            startTimeDiv.text(new Date(trip.get("start_time")).toLocaleTimeString("en-us", dateOptions));
+            
+            var tripLineDiv = $("<div class='tripLine'></div><div></div><div></div>");
+            
+            var tripSummaryDiv =  $("<div class='tripSummary'></div>");
+            
+            var endLocationDiv = $("<div class='endLocation'></div>");
+            endLocationDiv.text(trip.get("end_location"));
+            
+//             var mpgDiv = $("<div class='mpg'></div>");
+//             mpgDiv.text(Math.round(trip.get("average_mpg")));
+            var miDiv = $("<div class='distance'></div>");
+ 			miDiv.text(Math.round(trip.get("distance_m")*0.000621371));
+            
+            var startLocationDiv = $("<div class='startLocation'></div>");
+            startLocationDiv.text(trip.get("start_location"));
+            
+            
+            tripSummaryDiv.append(endLocationDiv);
+//             tripSummaryDiv.append(mpgDiv);
+            tripSummaryDiv.append(miDiv);
+            tripSummaryDiv.append(startLocationDiv);
+            
+            timesDiv.append(endTimeDiv);
+            timesDiv.append(durationDiv);
+            timesDiv.append(startTimeDiv);
+            timesDiv.append(tripLineDiv);
+            
+            bDiv.append(bLabel);
+            bDiv.append(bInput);
+            
+            pDiv.append(pLabel);
+            pDiv.append(pInput);
+            
+            toggleDiv.append(pDiv);
+            toggleDiv.append(bDiv);
+            fieldsetDiv.append(toggleDiv);
+            toggleWrapperDiv.append(fieldsetDiv);
+            fieldcontain.append(toggleWrapperDiv);
+            fieldcontain.append(timesDiv);
+            fieldcontain.append(tripSummaryDiv);
+            trips.append(fieldcontain);
+            
+            return trips;
+            
+        }
+        
+        
+        
+            </script>
+    </body>
+</html>
