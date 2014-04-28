@@ -2487,7 +2487,7 @@ fieldset.ui-controlgroup {
 .ui-radio {
 	margin: .5em 0;
 	position: relative;
-	font-size: .2em;
+	font-size: .8em;
 }
 .ui-checkbox .ui-btn,
 .ui-radio .ui-btn {
@@ -4310,7 +4310,7 @@ padding-bottom: .3em;
 .personal_business_toggle {
 float: left;
 width: 8em;
-margin-right: -5em;
+margin-right: -3.5em;
 margin-top: 2.4em;
 }
 

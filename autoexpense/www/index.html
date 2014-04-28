@@ -41,13 +41,14 @@
     <body>
         <div style="margin-left: -.5em; margin-right: -.5em;" class="ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
             <a style="" class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
-            <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">AutoExpense</h1>
+            <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">
+            	<img style="height: 1.5em; margin: -.5em;" src="img/AutoExpense-Logo.jpg"/></h1>
             <a style="margin-left: -.5em; margin-right: -.5em;" href="expense.html" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
         </div>
         <div style="margin-left: -.5em; margin-right: -.5em; text-align: center" class="fixedFilter ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
             <button onclick="viewPersonalAndBusiness()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">All</button>
-            <button onclick="viewBusinessOnly()" style="width: 8em"  data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-shop">Business</button>
             <button onclick="viewPersonalOnly()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-user">Personal</button>
+            <button onclick="viewBusinessOnly()" style="width: 8em"  data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-shop">Business</button>
         </div>
         <div id="autoexpense">
         </div>
@@ -198,11 +199,11 @@ $(window).scroll(function(e){
 			endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", dateOptions));
             
 			var durationDiv = $("<div class='duration'></div>");
-             var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime());
-             durationDiv.text(diffTime.getHours() + ":" + diffTime.getMinutes());
+            //  var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime());
+//              durationDiv.text(diffTime.getHours() + ":" + diffTime.getMinutes());
             
-            // ar diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
-//             durationDiv.text(Math.round(diffTime));
+            var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
+            durationDiv.text(Math.round(diffTime));
  
             var startTimeDiv = $("<div class='startTime'></div>");
             startTimeDiv.text(new Date(trip.get("start_time")).toLocaleTimeString("en-us", dateOptions));
