@@ -8,6 +8,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.PushService;
 import com.qualcomm.toq.smartwatch.api.v1.deckofcards.Constants;
 
 
@@ -17,7 +20,6 @@ import com.qualcomm.toq.smartwatch.api.v1.deckofcards.Constants;
  * @author mcaunter
  */
 public class ToqAppletInstallationBroadcastReceiver extends BroadcastReceiver{
-
     
     /**
      * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)

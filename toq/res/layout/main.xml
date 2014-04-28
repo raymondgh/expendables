@@ -67,10 +67,11 @@
             
             <View
                 android:background="@drawable/divider"
-                android:layout_width="fill_parent"               
+                android:layout_width="fill_parent"
                 android:layout_marginTop="5dp"
-                android:layout_marginBottom="5dp"                
+                android:layout_marginBottom="5dp"
                 android:layout_height="1dp" />
+
     
             <TextView
                 android:layout_width="wrap_content"
@@ -250,7 +251,7 @@
             </LinearLayout>
 
         </LinearLayout>
-        
+
     </ScrollView>   
     
     <LinearLayout 
