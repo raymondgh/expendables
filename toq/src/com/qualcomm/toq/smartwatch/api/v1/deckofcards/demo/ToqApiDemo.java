@@ -170,17 +170,17 @@ public class ToqApiDemo extends Activity{
                 Toast.makeText(this, getString(R.string.error_connecting_to_service), Toast.LENGTH_SHORT).show();
                 Log.e(Constants.TAG, "ToqApiDemo.onStart - error connecting to Toq app service", e);
             }
-            
         }
         else{
             Log.d(Constants.TAG, "ToqApiDemo.onStart - already connected");
             setStatus(getString(R.string.status_connected));
             refreshUI();
+            HandleParsePush();
         }
         try{
-            Intent intent = getIntent();
-            String tripId = intent.getStringExtra("tripId");
-            Log.d(Constants.TAG, "starting app with intent extra: " + tripId);
+//            Intent intent = getIntent();
+//            String tripId = intent.getStringExtra("tripId");
+//            Log.d(Constants.TAG, "starting app with intent extra: " + tripId);
 //            HandleParsePush(tripId);
         }catch(Exception ex){
             Log.d(Constants.TAG, "ToqApiDemo.onCreate");
@@ -922,14 +922,14 @@ public class ToqApiDemo extends Activity{
     }
 
     // Send notification button
-    public void HandleParsePush(String tripId){
-        lastTripId = tripId;
-        SharedPreferences settings = getSharedPreferences(DEMO_PREFS_FILE, 0);
-        SharedPreferences.Editor editor = settings.edit();
-        editor.putString(LAST_TRIP_ID_KEY, tripId);
-
-        // Commit the edits!
-        editor.commit();
+    public void HandleParsePush(){
+//        lastTripId = tripId;
+//        SharedPreferences settings = getSharedPreferences(DEMO_PREFS_FILE, 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putString(LAST_TRIP_ID_KEY, tripId);
+//
+//        // Commit the edits!
+//        editor.commit();
 
         Log.d(Constants.TAG, "ToqApiDemo.sendNotification");
 
@@ -938,7 +938,7 @@ public class ToqApiDemo extends Activity{
                 "New Trip Detected",
                 new String [] {"Was this a business trip?"});
 
-        notificationCard.setInfoText(tripId);
+        notificationCard.setInfoText("");
         notificationCard.setReceivingEvents(true);
         notificationCard.setMenuOptions(new String[] {"Yes","No"});
         notificationCard.setShowDivider(true);
