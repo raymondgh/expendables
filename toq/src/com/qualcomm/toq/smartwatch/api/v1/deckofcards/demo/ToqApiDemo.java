@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Copyright (c) 2014 Qualcomm Connected Experiences, Inc, All rights reserved
  ******************************************************************************/
-package com.qualcomm.toq.smartwatch.api.v1.deckofcards.demo;
+package com.parseapp.expensetracker.toq;
 
 import java.io.InputStream;
 
@@ -39,6 +39,18 @@ import com.qualcomm.toq.smartwatch.api.v1.deckofcards.remote.RemoteToqNotificati
 import com.qualcomm.toq.smartwatch.api.v1.deckofcards.resource.DeckOfCardsLauncherIcon;
 import com.qualcomm.toq.smartwatch.api.v1.deckofcards.util.ParcelableUtil;
 
+import com.parse.Parse;
+import com.parse.ParseAnalytics;
+import com.parse.PushService;
+import com.parse.FunctionCallback;
+import com.parse.ParseCloud;
+import com.parse.ParseException;
+import com.parse.ParseGeoPoint;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
+
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  * Demo client which uses the Toq api library, which is part of the Toq SDK, to communicate 
@@ -51,7 +63,8 @@ import com.qualcomm.toq.smartwatch.api.v1.deckofcards.util.ParcelableUtil;
  * @author mcaunter
  */
 public class ToqApiDemo extends Activity{
-
+    private String lastTripId = "1";
+    private final static String LAST_TRIP_ID_KEY = "last_trip_id_key";
 
     private final static String DEMO_PREFS_FILE= "demo_prefs_file";
     private final static String DECK_OF_CARDS_KEY= "deck_of_cards_key";
@@ -90,7 +103,11 @@ public class ToqApiDemo extends Activity{
     public void onCreate(Bundle icicle){
                 
         super.onCreate(icicle);
-        
+
+        Parse.initialize(this, "bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx", "MADAxrQegur3SzaTVVsFm3WPYTSEsEiMv7TdE6CQ");
+        PushService.setDefaultPushCallback(this, ToqApiDemo.class);
+        ParseAnalytics.trackAppOpened(getIntent());
+
         Log.d(Constants.TAG, "ToqApiDemo.onCreate");
 
         setContentView(R.layout.main);
@@ -110,6 +127,16 @@ public class ToqApiDemo extends Activity{
         // Init
         initDeckOfCards();       
         initUI();
+
+        try{
+            Intent intent = getIntent();
+            String tripId = intent.getStringExtra("tripId");
+            Log.d(Constants.TAG, "starting app with intent extra: " + tripId);
+//            HandleParsePush(tripId);
+        }catch(Exception ex){
+            Log.d(Constants.TAG, "failed getting tripid onCreate");
+        }
+
     }
     
     
@@ -143,14 +170,21 @@ public class ToqApiDemo extends Activity{
                 Toast.makeText(this, getString(R.string.error_connecting_to_service), Toast.LENGTH_SHORT).show();
                 Log.e(Constants.TAG, "ToqApiDemo.onStart - error connecting to Toq app service", e);
             }
-            
         }
         else{
             Log.d(Constants.TAG, "ToqApiDemo.onStart - already connected");
             setStatus(getString(R.string.status_connected));
             refreshUI();
+            HandleParsePush();
         }
-
+        try{
+//            Intent intent = getIntent();
+//            String tripId = intent.getStringExtra("tripId");
+//            Log.d(Constants.TAG, "starting app with intent extra: " + tripId);
+//            HandleParsePush(tripId);
+        }catch(Exception ex){
+            Log.d(Constants.TAG, "ToqApiDemo.onCreate");
+        }
     }    
     
 
@@ -201,6 +235,10 @@ public class ToqApiDemo extends Activity{
                 public void run(){                   
                     setStatus(getString(R.string.status_connected));
                     refreshUI();
+                    //HandleParsePush();
+                    Intent intent = getIntent();
+                    String tripId = intent.getStringExtra("tripId");
+                    Log.d(Constants.TAG, "starting app with intent extra: " + tripId);
                 }
             });
         }
@@ -265,7 +303,7 @@ public class ToqApiDemo extends Activity{
         public void onCardOpen(final String cardId){
             runOnUiThread(new Runnable(){
                 public void run(){
-                    Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_open) + cardId, Toast.LENGTH_SHORT).show();               
+                    //Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_open) + cardId, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -276,7 +314,7 @@ public class ToqApiDemo extends Activity{
         public void onCardVisible(final String cardId){
             runOnUiThread(new Runnable(){
                 public void run(){
-                    Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_visible) + cardId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_visible) + cardId, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -287,7 +325,7 @@ public class ToqApiDemo extends Activity{
         public void onCardInvisible(final String cardId){
             runOnUiThread(new Runnable(){
                 public void run(){
-                    Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_invisible) + cardId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_invisible) + cardId, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -298,7 +336,7 @@ public class ToqApiDemo extends Activity{
         public void onCardClosed(final String cardId){
             runOnUiThread(new Runnable(){
                 public void run(){
-                    Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_closed) + cardId, Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ToqApiDemo.this, getString(R.string.event_card_closed) + cardId, Toast.LENGTH_SHORT).show();
                 }
             });
         }
@@ -309,13 +347,22 @@ public class ToqApiDemo extends Activity{
         public void onMenuOptionSelected(final String cardId, final String menuOption){
             runOnUiThread(new Runnable(){
                 public void run(){
-                    Toast.makeText(ToqApiDemo.this, getString(R.string.event_menu_option_selected) + cardId + " [" + menuOption +"]", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(ToqApiDemo.this, getString(R.string.event_menu_option_selected) + cardId + " [" + menuOption +"]", Toast.LENGTH_SHORT).show();
+                    if(menuOption.equals("Yes")){
+                        //this is a business trip
+                        //Toast.makeText(ToqApiDemo.this, "Bidnizz", Toast.LENGTH_LONG).show();
+                        SendParseResponse(cardId,true);
+                    } else if(menuOption.equals("No")){
+                        //this is not a business trip
+                        //Toast.makeText(ToqApiDemo.this, "Phun", Toast.LENGTH_LONG).show();
+                        SendParseResponse(cardId,false);
+                    }
                 }
             });
         }
 
     }
-    
+
     
     // Toq app state receiver
     private class ToqAppStateBroadcastReceiver extends BroadcastReceiver{
@@ -513,6 +560,7 @@ public class ToqApiDemo extends Activity{
         
         SharedPreferences prefs= getSharedPreferences(DEMO_PREFS_FILE, Context.MODE_PRIVATE);
         String deckOfCardsStr= prefs.getString(DECK_OF_CARDS_KEY, null);
+//        lastTripId = prefs.getString(LAST_TRIP_ID_KEY, null);
         
         if (deckOfCardsStr == null){
             return null;
@@ -560,21 +608,21 @@ public class ToqApiDemo extends Activity{
         simpleTextCard.setShowDivider(true);
         listCard.add(simpleTextCard);
         
-        // Card 2
-        simpleTextCard= new SimpleTextCard("card2", "Header 2", System.currentTimeMillis(), "Title 2", new String[]{"Card 2: line 1", "Card 2: line 2", "Card 2: line 3"});
-        simpleTextCard.setInfoText("20");
-        simpleTextCard.setReceivingEvents(true);
-        simpleTextCard.setMenuOptions(new String[]{"111", "222", "333"});
-        simpleTextCard.setShowDivider(false);
-        listCard.add(simpleTextCard);
-
-        // Card 3
-        simpleTextCard= new SimpleTextCard("card3", "Header 3", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
-        simpleTextCard.setInfoText("30");
-        simpleTextCard.setReceivingEvents(false);
-        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
-        simpleTextCard.setShowDivider(true);
-        listCard.add(simpleTextCard);
+//        // Card 2
+//        simpleTextCard= new SimpleTextCard("card2", "Header 2", System.currentTimeMillis(), "Title 2", new String[]{"Card 2: line 1", "Card 2: line 2", "Card 2: line 3"});
+//        simpleTextCard.setInfoText("20");
+//        simpleTextCard.setReceivingEvents(true);
+//        simpleTextCard.setMenuOptions(new String[]{"111", "222", "333"});
+//        simpleTextCard.setShowDivider(false);
+//        listCard.add(simpleTextCard);
+//
+//        // Card 3
+//        simpleTextCard= new SimpleTextCard("card3", "Header 3", System.currentTimeMillis(), "Title 3", new String[]{"Card 3: line 1", "Card 3: line 2", "Card 3: line 3"});
+//        simpleTextCard.setInfoText("30");
+//        simpleTextCard.setReceivingEvents(false);
+//        simpleTextCard.setMenuOptions(new String[]{"xxx", "yyy", "zzz"});
+//        simpleTextCard.setShowDivider(true);
+//        listCard.add(simpleTextCard);
 
         return new RemoteDeckOfCards(this, listCard);  
     }
@@ -622,39 +670,38 @@ public class ToqApiDemo extends Activity{
         // Deck of cards
         ListCard listCard= deckOfCards.getListCard();
         
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
-
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
-
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
-        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
-        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
-        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
-        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
-        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
-        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);
+//        ((EditText)findViewById(R.id.doc1_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc1_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc1_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc1_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc1_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc1_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc1_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);
+//        ((EditText)findViewById(R.id.doc2_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc2_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc2_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc2_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc2_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc2_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc2_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
+//
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);
+//        ((EditText)findViewById(R.id.doc3_header_text)).setText(simpleTextCard.getHeaderText());
+//        ((EditText)findViewById(R.id.doc3_title_text)).setText(simpleTextCard.getTitleText());
+//        ((EditText)findViewById(R.id.doc3_message_text)).setText(concatStrings(simpleTextCard.getMessageText()));
+//        ((EditText)findViewById(R.id.doc3_info_text)).setText(simpleTextCard.getInfoText());
+//        ((CheckBox)findViewById(R.id.doc3_events_checkbox)).setChecked(simpleTextCard.isReceivingEvents());
+//        ((EditText)findViewById(R.id.doc3_menu_options_text)).setText(concatStrings(simpleTextCard.getMenuOptions()));
+//        ((CheckBox)findViewById(R.id.doc3_divider_checkbox)).setChecked(simpleTextCard.isShowDivider());
 
         // Notification
-        ((EditText)findViewById(R.id.notification_title_text)).setText("Title");
-        ((EditText)findViewById(R.id.notification_message_text)).setText(concatStrings(new String[]{"Line 1", "Line 2", "Line 3"}));
-        ((EditText)findViewById(R.id.notification_info_text)).setText("99");
+        ((EditText)findViewById(R.id.notification_title_text)).setText("New Trip");
+        ((EditText)findViewById(R.id.notification_message_text)).setText("Is this a business trip?");
         ((CheckBox)findViewById(R.id.notification_events_checkbox)).setChecked(true);
-        ((EditText)findViewById(R.id.notification_menu_options_text)).setText(concatStrings(new String[]{"opt1", "opt2", "opt3"}));
+        ((EditText)findViewById(R.id.notification_menu_options_text)).setText(concatStrings(new String[]{"Yes", "No"}));
         ((CheckBox)findViewById(R.id.notification_divider_checkbox)).setChecked(true);
         ((CheckBox)findViewById(R.id.notification_vibe_checkbox)).setChecked(true);
 
@@ -794,59 +841,59 @@ public class ToqApiDemo extends Activity{
     
     // Parse the UI to update the deck of cards contents
     private void updateDeckOfCardsFromUI(){
-
-        ListCard listCard= deckOfCards.getListCard();
-
-        // Card 1
-        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc1_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc1_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc1_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc1_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc1_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc1_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc1_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc1_menu_options_text)).getText().toString()));
-        }     
-                
-        // Card 2
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc2_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc2_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc2_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc2_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc2_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc2_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc2_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc2_menu_options_text)).getText().toString()));
-        }
-        
-        // Card 3
-        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);        
-        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc3_header_text)).getText().toString());
-        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc3_title_text)).getText().toString());
-        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc3_message_text)).getText().toString()));
-        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
-        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
-        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
-        simpleTextCard.setTimeMillis(System.currentTimeMillis());
-        
-        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
-            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
-        }
-        else{
-            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
-        } 
+//
+//        ListCard listCard= deckOfCards.getListCard();
+//
+//        // Card 1
+//        SimpleTextCard simpleTextCard= (SimpleTextCard)listCard.childAtIndex(0);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc1_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc1_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc1_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc1_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc1_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc1_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc1_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc1_menu_options_text)).getText().toString()));
+//        }
+//
+//        // Card 2
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(1);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc2_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc2_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc2_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc2_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc2_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc2_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc2_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc2_menu_options_text)).getText().toString()));
+//        }
+//
+//        // Card 3
+//        simpleTextCard= (SimpleTextCard)listCard.childAtIndex(2);
+//        simpleTextCard.setHeaderText(((EditText)findViewById(R.id.doc3_header_text)).getText().toString());
+//        simpleTextCard.setTitleText(((EditText)findViewById(R.id.doc3_title_text)).getText().toString());
+//        simpleTextCard.setMessageText(splitString(((EditText)findViewById(R.id.doc3_message_text)).getText().toString()));
+//        simpleTextCard.setInfoText(((EditText)findViewById(R.id.doc3_info_text)).getText().toString());
+//        simpleTextCard.setReceivingEvents(((CheckBox)findViewById(R.id.doc3_events_checkbox)).isChecked());
+//        simpleTextCard.setShowDivider(((CheckBox)findViewById(R.id.doc3_divider_checkbox)).isChecked());
+//        simpleTextCard.setTimeMillis(System.currentTimeMillis());
+//
+//        if (((EditText)findViewById(R.id.doc3_menu_options_text)).getText().length() == 0){
+//            simpleTextCard.setMenuOptions(null); // If all menu options deleted, reset
+//        }
+//        else{
+//            simpleTextCard.setMenuOptions(splitString(((EditText)findViewById(R.id.doc3_menu_options_text)).getText().toString()));
+//        }
 
     }
     
@@ -869,9 +916,59 @@ public class ToqApiDemo extends Activity{
     }
     
     
-    //
+    //opokgrl;kgd
     private String[] splitString(String textStr){       
         return textStr.split("\n");
+    }
+
+    // Send notification button
+    public void HandleParsePush(){
+//        lastTripId = tripId;
+//        SharedPreferences settings = getSharedPreferences(DEMO_PREFS_FILE, 0);
+//        SharedPreferences.Editor editor = settings.edit();
+//        editor.putString(LAST_TRIP_ID_KEY, tripId);
+//
+//        // Commit the edits!
+//        editor.commit();
+
+        Log.d(Constants.TAG, "ToqApiDemo.sendNotification");
+
+        // Create notification text card from UI values
+        NotificationTextCard notificationCard= new NotificationTextCard(System.currentTimeMillis(),
+                "New Trip Detected",
+                new String [] {"Was this a business trip?"});
+
+        notificationCard.setInfoText("");
+        notificationCard.setReceivingEvents(true);
+        notificationCard.setMenuOptions(new String[] {"Yes","No"});
+        notificationCard.setShowDivider(true);
+        notificationCard.setVibeAlert(true);
+
+        RemoteToqNotification notification= new RemoteToqNotification(this, notificationCard);
+
+        try{
+            deckOfCardsManager.sendNotification(notification);
+        }
+        catch (RemoteDeckOfCardsException e){
+            Toast.makeText(this, getString(R.string.error_sending_notification), Toast.LENGTH_SHORT).show();
+            Log.e(Constants.TAG, "ToqApiDemo.sendNotification - error sending notification", e);
+        }
+
+    }
+
+    public void SendParseResponse(String cardId, Boolean isBusiness){
+        Log.d(Constants.TAG,"trying to update trip: " + cardId + " with " + isBusiness);
+        Map<String,String> params = new HashMap<String,String>();
+        params.put("cardId", cardId);
+        params.put("isBusiness", isBusiness.toString());
+
+        ParseCloud.callFunctionInBackground("UpdateTrip", params, new FunctionCallback< Map<String, Object> >() {
+            public void done(Map<String, Object> mapObject, ParseException e) {
+                if (e == null){
+                    //Toast.makeText(appContext, mapObject.get("answer").toString(), Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
   
 }

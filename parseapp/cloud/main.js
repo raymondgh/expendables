@@ -4,3 +4,8 @@ require('cloud/app.js');
 Parse.Cloud.define("hello", function(request, response) {
   response.success("Hello world!");
 });
+
+Parse.Cloud.define("UpdateTrip", function(request, response) {
+  console.log(request.body);
+  response.success("Hello world!");
+});
