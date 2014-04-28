@@ -43,7 +43,7 @@
             <a style="" class="ui-btn-left ui-btn-corner-all ui-btn ui-icon-power ui-btn-icon-notext ui-shadow" title=" Log Out " data-form="ui-icon" data-role="button" role="button"> Log Out </a>
             <h1 class="ui-title" tabindex="0" role="heading" aria-level="1">
             	<img style="height: 1.5em; margin: -.5em;" src="img/AutoExpense-Logo.jpg"/></h1>
-            <a style="margin-left: -.5em; margin-right: -.5em;" href="expense.html" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
+            <a style="" href="expense.html" class="ui-btn-right ui-btn-corner-all ui-btn ui-icon-action ui-btn-icon-notext ui-shadow" title=" Navigation " data-form="ui-icon" data-role="button" role="button" id="exportExpense"> Export </a>
         </div>
         <div style="margin-left: -.5em; margin-right: -.5em; text-align: center" class="fixedFilter ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
             <button onclick="viewPersonalAndBusiness()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">All</button>
@@ -69,6 +69,13 @@
             hour: "2-digit", minute: "2-digit"
         };
         
+        var images = [
+        	"img/map1.png",
+        	"img/map2.png",
+        	"img/map3.png",
+        	"img/map0.png"
+        ];
+        
         
         var Trips = Parse.Object.extend("Trips");
         var queryObject = new Parse.Query("Trips");
@@ -93,20 +100,20 @@
                          $('#autoexpense').append("Error: " + error.code + " " + error.message);
                          }});
                          
-                         window.addEventListener("load",function() {
-                                                 setTimeout(function(){
-                                                            window.scrollTo(0, 1);
-                                                            }, 0);
-                                                 });
-                                                 
-$(window).scroll(function(e){ 
-  $el = $('.fixedFilter'); 
-  if ($(this).scrollTop() > 100 && $el.css('position') != 'fixed'){
-    $('.fixedFilter').css({'position': 'fixed', 'top': '0px', 'width': '100%'});
-  } else if ( $(this).scrollTop() <= 100 ){
-                 $('.fixedFilter').css({'margin-left': '-.5em', 'margin-right': '-.5em', 'text-align': 'center', 'top': 'px', 'position' : 'relative', 'width': '%'})
-  }
-});
+                       //  window.addEventListener("load",function() {
+//                                                   setTimeout(function(){
+//                                                              window.scrollTo(0, 1);
+//                                                              }, 0);
+//                                                   });
+                                                  
+ $(window).scroll(function(e){ 
+   $el = $('.fixedFilter'); 
+   if ($(this).scrollTop() > 100 && $el.css('position') != 'fixed'){
+     $('.fixedFilter').css({'position': 'fixed', 'top': '0px', 'width': '100%'});
+   } else if ( $(this).scrollTop() <= 100 ){
+                  $('.fixedFilter').css({'margin-left': '-.5em', 'margin-right': '-.5em', 'text-align': 'center', 'top': 'px', 'position' : 'relative', 'width': '%'})
+   }
+ });
                          
                          
                          function clickPersonal(elementOn, elementOff) {
@@ -212,6 +219,8 @@ $(window).scroll(function(e){
             
             var tripSummaryDiv =  $("<div class='tripSummary'></div>");
             
+            var mapDiv = $("<div><div><img src=\""+ images[ndx%3] +"\" style='width: 5em;padding-left: .8em;'/></div></div>");
+            
             var endLocationDiv = $("<div class='endLocation'></div>");
             endLocationDiv.text(trip.get("end_location"));
             
@@ -247,6 +256,7 @@ $(window).scroll(function(e){
             fieldcontain.append(toggleWrapperDiv);
             fieldcontain.append(timesDiv);
             fieldcontain.append(tripSummaryDiv);
+            fieldcontain.append(mapDiv);
             trips.append(fieldcontain);
             
             return trips;

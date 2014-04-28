@@ -134,10 +134,15 @@
             
             function addExpenseTable(trip) {
             	var date = new Date(trip.get("start_time")).toLocaleDateString("en-us", dateOptions);
-            	return $("<tr><td>" + date + "</td><td>"+ (trip.get("distance_m")/1609).toFixed(2) +"</td><td>" + 
+            	if ( trip.get("business") ) {
+            		return $("<tr><td>" + date + "</td><td>"+ (trip.get("distance_m")/1609).toFixed(2) +"</td><td>" + 
             		trip.get("start_location") + "</td><td>" + 
             		trip.get("end_location") + "</td><td>$" + 
             		(trip.get("distance_m") * .000347967868).toFixed(2) +"</td></tr>");
+            	} else {
+            		return "";
+            	}
+            	
             }
             
             function getTotalCost(trips) {

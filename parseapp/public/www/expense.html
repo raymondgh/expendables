@@ -91,9 +91,13 @@
         </tr>
     </thead>
     <tbody id="expenseTable">
-    </tbody>
-</table>
-        </div>
+    </tbody>   
+	</table>
+	<div style="margin-left: -.5em; margin-right: -.5em; text-align: center" class="fixedFilter ui-header ui-bar-a" data-swatch="a" data-theme="a" data-form="ui-bar-a" data-role="header" role="banner">
+    	<button style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">Print</button>
+    	<button style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-mail">Email</button>
+    </div> 
+</div>
         
         
         
@@ -130,10 +134,15 @@
             
             function addExpenseTable(trip) {
             	var date = new Date(trip.get("start_time")).toLocaleDateString("en-us", dateOptions);
-            	return $("<tr><td>" + date + "</td><td>"+ (trip.get("distance_m")/1609).toFixed(2) +"</td><td>" + 
+            	if ( trip.get("business") ) {
+            		return $("<tr><td>" + date + "</td><td>"+ (trip.get("distance_m")/1609).toFixed(2) +"</td><td>" + 
             		trip.get("start_location") + "</td><td>" + 
             		trip.get("end_location") + "</td><td>$" + 
             		(trip.get("distance_m") * .000347967868).toFixed(2) +"</td></tr>");
+            	} else {
+            		return "";
+            	}
+            	
             }
             
             function getTotalCost(trips) {
