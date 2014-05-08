@@ -1,0 +1,64 @@
+
+@media (max-width: 768px) {
+	body {
+		font-size: 12px;
+	}	
+
+	.button-briefcase {
+		padding: 5px 10px;
+		font-size: 12px;
+		line-height: 1.5;
+		border-radius: 3px;
+		margin-top: -16px;
+	}	
+
+	.date {
+		display: none;
+	}	
+
+
+	.duration {
+		font-size: 12px;
+		padding: 10px 0px 10px 10px;
+		
+	}
+
+	.duration::after {
+		content: ' min';
+		font-size: 10px;
+		font-weight: normal;
+	} 
+
+	.map img {
+		display: none;
+	}
+	.miles {
+		padding: 10px;
+		font-size: 12px;
+	}
+
+	.miles:after {
+		content: ' mi';
+		font-size: 10px;
+		font-weight: normal;
+	}
+
+	.locations {
+		font-weight: bold;
+		width: 18em;
+		/*padding-left: 9em;*/
+
+	}
+	.list-group-item {
+		padding: 1em;
+		height: 8em;
+
+	}
+
+	.times {
+		width: 8em;
+		border-right: 3px solid #08b1d5;
+		padding-right: 5px;
+
+	}	
+}

@@ -1,0 +1,175 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="img/autoexpense-icon.jpg">
+
+    <title>AutoExpense</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="css/autoexpense.css">
+    <link rel="stylesheet" href="css/autoexpense-sm.css">
+
+    <!-- Just for debugging purposes. Don't actually copy this line! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <!-- <a class="navbar-brand" href="#"> -->
+            <img class="navbar-brand"  src="img/autoexpense-logo.jpg"/>
+          <!-- </a> -->
+        </div>
+        <div class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <!-- <li class="active"><a href="#">Home</a></li> -->
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="#logout">Log Out</a></li>
+          </ul>
+        </div><!--/.nav-collapse -->
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="starter-template">
+        <div class="col-sm-12">
+          <div class="list-group">
+            <a href="#" class="list-group-item">
+              <button type="button" class="btn btn-default button-briefcase">
+                <span class="glyphicon glyphicon-briefcase"></span>
+              </button>
+              <div class="times">
+                <div class="endtime">
+                  5:54 PM
+                </div>
+                <div class="date">
+                  Feb 2
+                </div>
+                <div class="duration">
+                  54
+                </div>
+                <div class="starttime">
+                  4:45 PM
+                </div>
+              </div>
+              <div class="locations">
+                <div class="endlocation">
+                  Mission St, SF, CA
+                </div>
+                <div class="miles">
+                  66.3
+                </div>
+                <div class="startlocation">
+                  Trenton Road, Santa Rosa, CA
+                </div>
+              </div>
+              <div class="map">
+                <img src="img/map1.png"/>
+              </div>
+            </a>
+      <a href="#" class="list-group-item">
+              <button type="button" class="btn btn-default button-briefcase">
+                <span class="glyphicon glyphicon-briefcase"></span>
+              </button>
+              <div class="times">
+                <div class="endtime">
+                  5:54 PM
+                </div>
+                <div class="date">
+                  Feb 2
+                </div>
+                <div class="duration">
+                  54
+                </div>
+                <div class="starttime">
+                  4:45 PM
+                </div>
+              </div>
+              <div class="locations">
+                <div class="endlocation">
+                  Mission St, SF, CA
+                </div>
+                <div class="miles">
+                  66.3
+                </div>
+                <div class="startlocation">
+                  Trenton Road, Santa Rosa, CA
+                </div>
+              </div>
+              <div class="map">
+                <img src="img/map1.png"/>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.container -->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+    <!-- script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script -->
+    <script type="text/javascript">
+      // Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx",  "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+      var dateOptions = {
+        year: "numeric", month: "short",
+        day: "numeric", hour: "2-digit", minute: "2-digit"
+      };
+
+      var hourOptions = {
+        hour: "2-digit", minute: "2-digit"
+      };
+
+      // var Trips = Parse.Object.extend("Trips");
+      // var queryObject = new Parse.Query("Trips");
+      // var tripsObj;
+
+      // queryObject.find({
+      //  success: function (results) {
+      //    tripsObj = results;
+      //    for (var i = 0; i < results.length; i++) {
+      //      $('#autoexpense').append(addTrip(i,results[i]));
+      //      if ( results[i].get("business") == true ) {
+      //        $('#b_' + i).find('label').click();
+      //      }
+      //    }
+      //  },
+      //  error: function (error) {
+      //    $('#autoexpense').append("Error: " + error.code + " " + error.message);
+      //  }});
+
+
+    </script>
+
+  </body>
+</html>
