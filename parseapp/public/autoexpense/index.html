@@ -11,8 +11,10 @@
 
     <title>AutoExpense</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
+    <!-- Latest compiled and minified CSS -->    
+    <!-- <link rel="stylesheet" href="css/bootstrap.css"> -->
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
 
     <!-- Optional theme -->
     <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
@@ -105,12 +107,29 @@
          $('#autoexpense-list').append("Error: " + error.code + " " + error.message);
        }});
 
+      function toggleBusiness(ndx) {
+        if ( $('#bizButton'+ndx).hasClass('active') ) {
+          $('#bizButton'+ndx).removeClass('active');
+          $('#trip'+ndx).removeClass('business').addClass('personal');
+          tripsObj[ndx].set("business", false);
+
+        } else {
+          $('#bizButton'+ndx).addClass('active btn-default-hover');
+          $('#trip'+ndx).removeClass('personal').addClass('business');
+
+          tripsObj[ndx].set("business", true);
+        }
+        
+        tripsObj[ndx].save();
+      }
+
       function addTrip(ndx, trip) {
         var biz =trip.get("business") ? "business" : "personal";
 
-        var item = $("<div id='trip_" + ndx + "' class='list-group-item " + biz + "'></div>");
+        var item = $("<div id='trip" + ndx + "' class='list-group-item " + biz + "'></div>");
 
-        var bizButton = $("<button type='button' class='btn btn-default button-briefcase'><span class='glyphicon glyphicon-briefcase'></span></button>");
+        var bizButtonSelected = trip.get("business") ? "active" : "";
+        var bizButton = $("<button type='button' id='bizButton"+ndx+"' onclick='toggleBusiness("+ndx+")' class='btn btn-default button-briefcase " + bizButtonSelected+"'><span class='glyphicon glyphicon-briefcase' ></span></button>");
         
         var timesDiv = $("<div class='times'></div>");
         var endTimeDiv = $("<div class='endtime'></div>");
