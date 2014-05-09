@@ -15,7 +15,7 @@
     <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css">
 
     <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css">
+    <!-- <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap-theme.min.css"> -->
     <link rel="stylesheet" href="css/autoexpense.css">
     <link rel="stylesheet" href="css/autoexpense-sm.css">
 
@@ -57,73 +57,9 @@
     <div class="container">
       <div class="starter-template">
         <div class="col-sm-12">
-          <div class="list-group">
-            <a href="#" class="list-group-item">
-              <button type="button" class="btn btn-default button-briefcase">
-                <span class="glyphicon glyphicon-briefcase"></span>
-              </button>
-              <div class="times">
-                <div class="endtime">
-                  5:54 PM
-                </div>
-                <div class="date">
-                  Feb 2
-                </div>
-                <div class="duration">
-                  54
-                </div>
-                <div class="starttime">
-                  4:45 PM
-                </div>
-              </div>
-              <div class="locations">
-                <div class="endlocation">
-                  Mission St, SF, CA
-                </div>
-                <div class="miles">
-                  66.3
-                </div>
-                <div class="startlocation">
-                  Trenton Road, Santa Rosa, CA
-                </div>
-              </div>
-              <div class="map">
-                <img src="img/map1.png"/>
-              </div>
-            </a>
-      <a href="#" class="list-group-item">
-              <button type="button" class="btn btn-default button-briefcase">
-                <span class="glyphicon glyphicon-briefcase"></span>
-              </button>
-              <div class="times">
-                <div class="endtime">
-                  5:54 PM
-                </div>
-                <div class="date">
-                  Feb 2
-                </div>
-                <div class="duration">
-                  54
-                </div>
-                <div class="starttime">
-                  4:45 PM
-                </div>
-              </div>
-              <div class="locations">
-                <div class="endlocation">
-                  Mission St, SF, CA
-                </div>
-                <div class="miles">
-                  66.3
-                </div>
-                <div class="startlocation">
-                  Trenton Road, Santa Rosa, CA
-                </div>
-              </div>
-              <div class="map">
-                <img src="img/map1.png"/>
-              </div>
-            </a>
+          <div id="autoexpense-list" class="list-group">
+            
+
           </div>
         </div>
       </div>
@@ -138,9 +74,9 @@
 
     <!-- Latest compiled and minified JavaScript -->
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <!-- script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script -->
+    <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
     <script type="text/javascript">
-      // Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx",  "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
+      Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx",  "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
       var dateOptions = {
         year: "numeric", month: "short",
         day: "numeric", hour: "2-digit", minute: "2-digit"
@@ -150,24 +86,75 @@
         hour: "2-digit", minute: "2-digit"
       };
 
-      // var Trips = Parse.Object.extend("Trips");
-      // var queryObject = new Parse.Query("Trips");
-      // var tripsObj;
+      var Trips = Parse.Object.extend("Trips");
+      var queryObject = new Parse.Query("Trips");
+      var tripsObj;
 
-      // queryObject.find({
-      //  success: function (results) {
-      //    tripsObj = results;
-      //    for (var i = 0; i < results.length; i++) {
-      //      $('#autoexpense').append(addTrip(i,results[i]));
-      //      if ( results[i].get("business") == true ) {
-      //        $('#b_' + i).find('label').click();
-      //      }
-      //    }
-      //  },
-      //  error: function (error) {
-      //    $('#autoexpense').append("Error: " + error.code + " " + error.message);
-      //  }});
+      queryObject.find({
+       success: function (results) {
+         tripsObj = results;
+         console.log(results);
+         for (var i = 0; i < results.length; i++) {
+           $('#autoexpense-list').append(addTrip(i,results[i]));
+           // if ( results[i].get("business") == true ) {
+           //   $('#b_' + i).find('label').click();
+           // }
+         }
+       },
+       error: function (error) {
+         $('#autoexpense-list').append("Error: " + error.code + " " + error.message);
+       }});
 
+      function addTrip(ndx, trip) {
+        var biz =trip.get("business") ? "business" : "personal";
+
+        var item = $("<div id='trip_" + ndx + "' class='list-group-item " + biz + "'></div>");
+
+        var bizButton = $("<button type='button' class='btn btn-default button-briefcase'><span class='glyphicon glyphicon-briefcase'></span></button>");
+        
+        var timesDiv = $("<div class='times'></div>");
+        var endTimeDiv = $("<div class='endtime'></div>");
+        endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", hourOptions));
+
+        var dateDiv = $("<div class='date'></div>");
+        dateDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", hourOptions));
+
+        var durationDiv = $("<div class='duration'></div>");
+        var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
+        durationDiv.text(Math.round(diffTime));
+
+        var startTimeDiv = $("<div class='starttime'></div>");
+        startTimeDiv.text(new Date(trip.get("start_time")).toLocaleTimeString("en-us", hourOptions));
+
+        var locationDiv = $("<div class='locations'></div>");
+        var endLocationDiv = $("<div class='endlocation'></div>");
+        endLocationDiv.text(trip.get("end_location"));
+
+        var miDiv = $("<div class='miles'></div>");
+        miDiv.text(Math.round(trip.get("distance_m")*0.000621371));
+            
+        var startLocationDiv = $("<div class='startlocation'></div>");
+        startLocationDiv.text(trip.get("start_location"));
+
+        var mapDiv = $("<div class='map'><img src='img/map"+ ndx % 3 +".png'/></div>");
+            
+        locationDiv.append(endLocationDiv);
+        locationDiv.append(miDiv);
+        locationDiv.append(startLocationDiv);
+
+        timesDiv.append(endTimeDiv);
+        timesDiv.append(dateDiv);
+        timesDiv.append(durationDiv);
+        timesDiv.append(startTimeDiv);
+
+        item.append(bizButton);
+        item.append(timesDiv);
+        item.append(locationDiv);
+        item.append(mapDiv);
+
+console.log(item);
+        return item;
+      }
 
     </script>
 
