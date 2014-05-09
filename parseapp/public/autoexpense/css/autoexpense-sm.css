@@ -1,4 +1,9 @@
 
+@media (max-width: 900px) {
+	.map img {
+		max-height: 7em;
+	}	
+}
 @media (max-width: 768px) {
 	body {
 		font-size: 12px;
