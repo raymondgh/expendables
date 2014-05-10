@@ -58,7 +58,17 @@
 
     <div class="container">
       <div class="starter-template">
+
         <div class="col-sm-12">
+          <div id="autoexpense-filter" class="list-group">
+            <div>
+              <button onclick="viewPersonalAndBusiness()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-info">All</button>
+            <button onclick="viewPersonalOnly()" style="width: 8em" data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-user">Personal</button>
+            <button onclick="viewBusinessOnly()" style="width: 8em"  data-theme="c" data-form="ui-btn-up-c" class=" ui-btn ui-btn-c ui-btn-icon-left ui-shadow ui-corner-all ui-icon-shop">Business</button>
+        
+            </div>  
+
+          </div>
           <div id="autoexpense-list" class="list-group">
             
 
@@ -72,16 +82,16 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+    <script src="js/jquery.min.js"></script>
 
     <!-- Latest compiled and minified JavaScript -->
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
-    <script src="http://www.parsecdn.com/js/parse-1.2.18.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/parse-1.2.18.min.js"></script>
     <script type="text/javascript">
       Parse.initialize("bYeTkvdAImnMHatlxgJLqJ6iE63ByAHSzEZJsFqx",  "h8tmQFXYGTFvtH97jG1cn3VSnCpzfY2yVvFACmdU");
       var dateOptions = {
-        year: "numeric", month: "short",
-        day: "numeric", hour: "2-digit", minute: "2-digit"
+        month: "short",
+        day: "numeric",
       };
 
       var hourOptions = {
@@ -91,7 +101,7 @@
       var Trips = Parse.Object.extend("Trips");
       var queryObject = new Parse.Query("Trips");
       var tripsObj;
-
+      // queryObject.limit(1);
       queryObject.find({
        success: function (results) {
          tripsObj = results;
@@ -106,6 +116,22 @@
        error: function (error) {
          $('#autoexpense-list').append("Error: " + error.code + " " + error.message);
        }});
+
+
+        function viewBusinessOnly(){
+          $('.business').show();
+          $('.personal').hide();
+        }
+        
+        function viewPersonalOnly(){
+          $('.business').hide();
+          $('.personal').show();
+        }
+        
+        function viewPersonalAndBusiness() {
+          $('.business').show();
+          $('.personal').show();
+        }
 
       function toggleBusiness(ndx) {
         if ( $('#bizButton'+ndx).hasClass('active') ) {
@@ -136,7 +162,7 @@
         endTimeDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", hourOptions));
 
         var dateDiv = $("<div class='date'></div>");
-        dateDiv.text(new Date(trip.get("end_time")).toLocaleTimeString("en-us", hourOptions));
+        dateDiv.text(new Date(trip.get("end_time")).toLocaleDateString("en-us", dateOptions));
 
         var durationDiv = $("<div class='duration'></div>");
         var diffTime =  new Date(new Date(trip.get("end_time")).getTime() - new Date(trip.get("start_time")).getTime())*0.000016667;
@@ -171,7 +197,6 @@
         item.append(locationDiv);
         item.append(mapDiv);
 
-console.log(item);
         return item;
       }
 
